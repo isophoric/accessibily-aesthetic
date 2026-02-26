@@ -70,4 +70,11 @@ modeBtn.addEventListener('click', () => {
 });
 
 // initialize
+
 updatePalette();
+
+if (typeof culori !== 'undefined') {
+    updatePalette();
+} else {
+    console.error("color library failed to load. sliders will not work.");
+}
