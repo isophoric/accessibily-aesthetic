@@ -4,7 +4,7 @@
     --text: #1a1a1a;
     --accent: #6366f1;
     
-    /* Dynamic track color for sliders to ensure visibility */
+    /* Dynamic track color for sliders */
     --track-color: rgba(0, 0, 0, 0.2);
 
     /* Fonts */
@@ -33,7 +33,6 @@ body {
     padding: 2rem;
 }
 
-/* Link styling inside subtitle */
 a {
     color: inherit;
     text-decoration: underline;
@@ -45,7 +44,6 @@ a:hover {
 
 .app-container {
     display: grid;
-    /* 1.2fr 0.8fr balance */
     grid-template-columns: 1.2fr 0.8fr; 
     width: 100%;
     max-width: 1200px;
@@ -69,7 +67,6 @@ a:hover {
 .title {
     font-family: var(--font-title);
     font-weight: 500;
-    /* Increased size */
     font-size: clamp(4rem, 9vw, 7.5rem); 
     line-height: 1.05;
     margin-bottom: 1.5rem;
@@ -77,35 +74,46 @@ a:hover {
 }
 
 .description {
-    /* Increased size */
     font-size: 1.3rem;
-    opacity: 0.9; /* Slightly increased opacity for readability */
+    opacity: 0.9;
     line-height: 1.6;
     max-width: 100%; 
     font-family: var(--font-mono);
 }
 
+/* --- THE CRISPY COLOR CARD --- */
 .stats-row {
     background: var(--accent);
-    padding: 3rem 2.5rem; /* Slightly more padding for the larger text */
+    padding: 3rem 2.5rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 2rem;
     color: var(--bg); 
     border-radius: var(--radius);
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
     width: 100%; 
+    
+    /* 1. Border is Text Color */
+    border: 3px solid var(--text);
+    
+    /* 2. Elongated Bottom (Hard Shadow) is Text Color */
+    box-shadow: 0 8px 0 var(--text);
+}
+
+/* Optional: Subtle press effect on the card */
+.stats-row:active {
+    transform: translateY(4px);
+    box-shadow: 0 4px 0 var(--text);
 }
 
 .stat-card {
     display: flex;
     flex-direction: column;
-    min-width: 120px; /* Slightly wider to accommodate larger text */
+    min-width: 120px;
 }
 
 .label { 
-    /* Increased size */
     font-size: 0.9rem; 
     text-transform: uppercase; 
     opacity: 0.9; 
@@ -116,7 +124,6 @@ a:hover {
 
 .hex-value { 
     font-family: var(--font-mono);
-    /* Increased size */
     font-size: 1.8rem; 
     font-weight: bold; 
 }
@@ -144,7 +151,6 @@ a:hover {
 
 .control-group label { 
     font-weight: 600;
-    /* Increased size */
     font-size: 1.1rem; 
 }
 
@@ -153,7 +159,6 @@ a:hover {
     justify-content: space-between; 
     margin-bottom: 0.75rem; 
     font-family: var(--font-mono);
-    /* Increased size for the numbers next to sliders */
     font-size: 1.1rem;
 }
 
@@ -167,7 +172,6 @@ input[type="range"] {
     display: block;
 }
 
-/* Webkit Track (Chrome/Safari/Edge) */
 input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
     height: 4px;
@@ -176,7 +180,6 @@ input[type="range"]::-webkit-slider-runnable-track {
     border: none;
 }
 
-/* Firefox Track */
 input[type="range"]::-moz-range-track {
     width: 100%;
     height: 4px;
@@ -185,19 +188,17 @@ input[type="range"]::-moz-range-track {
     border: none;
 }
 
-/* Webkit Thumb */
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 26px; /* Slightly larger thumb */
+    height: 26px;
     width: 26px;
     border-radius: 50%;
     background: var(--accent);
-    margin-top: -11px; /* (4 - 26) / 2 = -11 */
+    margin-top: -11px;
     box-shadow: 0 0 0 4px var(--bg); 
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 2px solid var(--text); /* Added border to match theme */
 }
 
-/* Firefox Thumb */
 input[type="range"]::-moz-range-thumb {
     height: 26px;
     width: 26px;
@@ -205,38 +206,59 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 50%;
     background: var(--accent);
     box-shadow: 0 0 0 4px var(--bg);
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 2px solid var(--text);
 }
 
+/* --- THE HOLLOW TO FILLED BUTTON --- */
 button {
     padding: 1.5rem; 
-    background: var(--text);
-    color: var(--bg);
-    border: none;
+    
+    /* Default State: Hollow */
+    background: transparent;
+    color: var(--text);
+    border: 3px solid var(--text);
+    
+    /* 3D Effect for consistency */
+    box-shadow: 0 6px 0 var(--text);
+    
     font-family: var(--font-mono);
     font-weight: 600;
-    /* Increased size */
     font-size: 1.1rem;
     cursor: pointer;
     border-radius: var(--radius);
-    transition: transform 0.1s ease;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
     width: 100%;
     display: block;
 }
 
-button:active {
-    transform: scale(0.98);
+/* Hover State: Filled */
+button:hover {
+    background: var(--text);
+    color: var(--bg);
+    /* We keep the shadow on hover for a solid look */
 }
 
+/* Click State: Presses down */
+button:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 var(--text);
+}
+
+/* --- THE CRISPY CODE CARD --- */
 .code-output {
-    background: rgba(0,0,0,0.05);
+    background: rgba(0,0,0,0.03); /* Very subtle background */
     padding: 2rem;
-    /* Increased size */
     font-size: 1rem;
     border-radius: var(--radius);
     font-family: var(--font-mono);
     overflow-x: auto;
     width: 100%;
+    
+    /* 1. Border is Accent Color */
+    border: 3px solid var(--accent);
+    
+    /* 2. Elongated Bottom (Hard Shadow) is Accent Color */
+    box-shadow: 0 8px 0 var(--accent);
 }
 
 /* --- Mobile / Tablet Responsive --- */
