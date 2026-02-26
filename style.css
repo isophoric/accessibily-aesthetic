@@ -6,7 +6,6 @@
     
     /* Fonts */
     --font-title: 'Lexend', sans-serif;
-    /* This stack prefers Apple's SF Mono, then Windows' Consolas, then generic */
     --font-mono: 'SF Mono', 'Segoe UI Mono', 'Consolas', 'Menlo', monospace;
 
     /* Shape consistency */
@@ -22,7 +21,6 @@
 body {
     background-color: var(--bg);
     color: var(--text);
-    /* We now use mono for the body as requested, except the title */
     font-family: var(--font-mono); 
     transition: background-color 0.3s ease, color 0.3s ease;
     min-height: 100vh;
@@ -34,53 +32,58 @@ body {
 
 .app-container {
     display: grid;
-    /* Desktop: Left col takes available space, Right col is fixed 400px */
-    grid-template-columns: 1fr 400px;
+    /* 1fr 1fr ensures roughly equal width columns, adjusting specific widths below */
+    grid-template-columns: 1.2fr 0.8fr; 
     width: 100%;
     max-width: 1200px;
-    gap: 5rem; /* Increased gap slightly for better separation */
-    align-items: flex-start; 
+    gap: 5rem;
+    /* Stretch ensures both columns are the same height, helping vertical alignment */
+    align-items: stretch; 
 }
 
 /* --- Left Column --- */
 .preview-area {
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Pushes content to edges if needed */
     gap: 3rem; 
-    align-items: flex-start; /* Keeps things left-aligned on Desktop */
+    align-items: flex-start;
+}
+
+.header-content {
+    width: 100%;
 }
 
 .title {
     font-family: var(--font-title);
     font-weight: 500;
-    /* Adjusted size for Lexend readability */
     font-size: clamp(3.5rem, 8vw, 6.5rem); 
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    letter-spacing: -2px; /* Tighter tracking for modern look */
+    letter-spacing: -2px;
 }
 
 .description {
     font-size: 1.1rem;
     opacity: 0.8;
     line-height: 1.6;
-    max-width: 600px;
+    max-width: 100%; /* Allows text to define the width up to the column limit */
     font-family: var(--font-mono);
 }
 
 .stats-row {
     background: var(--accent);
-    padding: 2rem;
+    padding: 2.5rem 2rem; /* Increased padding for better proportions */
     display: flex;
     flex-wrap: wrap;
-    gap: 3rem; /* More space between stat numbers */
+    justify-content: space-between;
+    gap: 2rem;
     color: var(--bg); 
     border-radius: var(--radius);
     transition: background-color 0.3s ease;
     
-    /* FIX: Prevents the card from stretching too far right */
-    width: 100%;
-    max-width: fit-content; 
+    /* ALIGNMENT FIX: 100% Width ensures it matches the subtitle alignment */
+    width: 100%; 
 }
 
 .stat-card {
@@ -104,24 +107,21 @@ body {
     font-weight: bold; 
 }
 
-.badge {
-    display: inline-block;
-    padding: 4px 8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border-radius: 4px;
-    margin-top: 8px;
-    background: var(--bg);
-    color: var(--text);
-    width: fit-content;
-}
-
 /* --- Right Column (Controls) --- */
 .controls {
     display: flex;
     flex-direction: column;
+    /* ALIGNMENT FIX: Pushes the code box to the bottom */
+    justify-content: space-between; 
+    height: 100%; /* Uses full height of the grid cell */
     gap: 2rem;
-    margin-top: 1rem;
+}
+
+.controls-top {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem; /* Increased gap to make sliders/button take more space */
+    width: 100%;
 }
 
 .control-group label { 
@@ -132,43 +132,60 @@ body {
 .label-row { 
     display: flex; 
     justify-content: space-between; 
-    margin-bottom: 0.75rem; 
+    margin-bottom: 1rem; 
     font-family: var(--font-mono);
 }
 
 /* --- Fixed Slider CSS --- */
 input[type="range"] {
-    -webkit-appearance: none; /* Remove default styling */
+    -webkit-appearance: none; 
     width: 100%;
-    background: transparent; /* Transparent background */
+    background: transparent; 
     cursor: pointer;
+    margin-top: 0.5rem; /* Add breathing room */
 }
 
-/* The Track */
+/* Webkit Track (Chrome/Safari/Edge) */
 input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(0,0,0,0.1); /* Visible grey track */
+    border-radius: 5px;
+}
+
+/* Firefox Track */
+input[type="range"]::-moz-range-track {
     width: 100%;
     height: 6px;
     background: rgba(0,0,0,0.1);
     border-radius: 5px;
 }
 
-/* The Thumb (Circle) */
+/* Webkit Thumb */
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 20px;
-    width: 20px;
+    height: 24px; /* Slightly larger target */
+    width: 24px;
     border-radius: 50%;
     background: var(--accent);
-    /* Math to vertically center the thumb on the 6px track: (6px - 20px) / 2 */
-    margin-top: -7px; 
-    box-shadow: 0 0 0 2px var(--bg); /* Adds a small border to separate from track */
+    margin-top: -9px; /* Centering math: (6 - 24) / 2 */
+    box-shadow: 0 0 0 4px var(--bg); /* Thicker border "cutout" effect */
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
-/* Dark mode track adjust via JS class or just specificity? 
-   Since we use opacity for track color, it adapts automatically. */
+/* Firefox Thumb */
+input[type="range"]::-moz-range-thumb {
+    height: 24px;
+    width: 24px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--bg);
+    border: 1px solid rgba(0,0,0,0.1);
+}
 
 button {
-    padding: 1.2rem;
+    padding: 1.5rem; /* Larger button */
     background: var(--text);
     color: var(--bg);
     border: none;
@@ -178,6 +195,7 @@ button {
     cursor: pointer;
     border-radius: var(--radius);
     transition: transform 0.1s ease;
+    width: 100%;
 }
 
 button:active {
@@ -186,11 +204,12 @@ button:active {
 
 .code-output {
     background: rgba(0,0,0,0.05);
-    padding: 1.5rem;
+    padding: 2rem;
     font-size: 0.9rem;
     border-radius: var(--radius);
     font-family: var(--font-mono);
     overflow-x: auto;
+    /* Aligns vertically with the Color Card (Stats Row) because flex-between pushes it down */
 }
 
 /* --- Mobile / Tablet Responsive --- */
@@ -198,37 +217,28 @@ button:active {
     .app-container {
         grid-template-columns: 1fr;
         gap: 4rem;
+        height: auto;
     }
 
-    /* Center the Left Column Content */
     .preview-area {
-        align-items: center; /* Horizontally center flex items */
-        text-align: center;  /* Center text inside items */
-    }
-
-    .description {
-        margin: 0 auto; /* Center the description block itself */
-    }
-    
-    /* Allow the stats row to fill width again on mobile for aesthetics, 
-       but keep text centered */
-    .stats-row {
-        width: 100%; 
-        max-width: 100%;
-        justify-content: center; /* Center the cards inside the row */
+        align-items: center; 
+        text-align: center; 
         gap: 2rem;
     }
 
-    .stat-card {
-        align-items: center; /* Center text inside the individual cards */
-    }
-
-    body {
-        align-items: flex-start;
-        height: auto;
+    .stats-row {
+        justify-content: center;
+        gap: 3rem;
     }
     
+    .stat-card {
+        align-items: center;
+    }
+
+    /* Reset right column vertical spacing on mobile so it doesn't stretch weirdly */
     .controls {
-        margin-top: 0;
+        height: auto; 
+        justify-content: flex-start;
+        gap: 3rem;
     }
 }
