@@ -54,7 +54,10 @@ body {
     padding: 2rem;
     display: flex;
     gap: 2rem;
-    color: var(--bg); /* ensures labels pop against accent */
+    /* We force the text color inside the accent bar to be the background color.
+       This usually guarantees good contrast if the accent is bold. */
+    color: var(--bg); 
+    border-radius: 8px; /* Added for polish */
 }
 
 .stat-card {
@@ -106,4 +109,5 @@ button {
     padding: 1.5rem;
     font-size: 0.9rem;
     border-radius: 4px;
+
 }
