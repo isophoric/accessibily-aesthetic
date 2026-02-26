@@ -37,7 +37,7 @@ body {
 a {
     color: inherit;
     text-decoration: underline;
-    text-underline-offset: 2px;
+    text-underline-offset: 3px;
 }
 a:hover {
     opacity: 0.8;
@@ -69,15 +69,17 @@ a:hover {
 .title {
     font-family: var(--font-title);
     font-weight: 500;
-    font-size: clamp(3.5rem, 8vw, 6.5rem); 
-    line-height: 1.1;
+    /* Increased size */
+    font-size: clamp(4rem, 9vw, 7.5rem); 
+    line-height: 1.05;
     margin-bottom: 1.5rem;
     letter-spacing: -2px;
 }
 
 .description {
-    font-size: 1.1rem;
-    opacity: 0.8;
+    /* Increased size */
+    font-size: 1.3rem;
+    opacity: 0.9; /* Slightly increased opacity for readability */
     line-height: 1.6;
     max-width: 100%; 
     font-family: var(--font-mono);
@@ -85,7 +87,7 @@ a:hover {
 
 .stats-row {
     background: var(--accent);
-    padding: 2.5rem 2rem;
+    padding: 3rem 2.5rem; /* Slightly more padding for the larger text */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -99,11 +101,12 @@ a:hover {
 .stat-card {
     display: flex;
     flex-direction: column;
-    min-width: 100px;
+    min-width: 120px; /* Slightly wider to accommodate larger text */
 }
 
 .label { 
-    font-size: 0.75rem; 
+    /* Increased size */
+    font-size: 0.9rem; 
     text-transform: uppercase; 
     opacity: 0.9; 
     font-weight: 600;
@@ -113,7 +116,8 @@ a:hover {
 
 .hex-value { 
     font-family: var(--font-mono);
-    font-size: 1.5rem; 
+    /* Increased size */
+    font-size: 1.8rem; 
     font-weight: bold; 
 }
 
@@ -124,13 +128,13 @@ a:hover {
     justify-content: space-between; 
     height: 100%; 
     gap: 2rem;
-    width: 100%; /* Ensure right column fills grid cell */
+    width: 100%;
 }
 
 .controls-top {
     display: flex;
     flex-direction: column;
-    gap: 2.5rem; /* Space between sliders and button */
+    gap: 2.5rem;
     width: 100%;
 }
 
@@ -140,14 +144,17 @@ a:hover {
 
 .control-group label { 
     font-weight: 600;
-    font-size: 1rem;
+    /* Increased size */
+    font-size: 1.1rem; 
 }
 
 .label-row { 
     display: flex; 
     justify-content: space-between; 
-    margin-bottom: 0.5rem; 
+    margin-bottom: 0.75rem; 
     font-family: var(--font-mono);
+    /* Increased size for the numbers next to sliders */
+    font-size: 1.1rem;
 }
 
 /* --- Fixed Slider CSS --- */
@@ -157,13 +164,13 @@ input[type="range"] {
     background: transparent; 
     cursor: pointer;
     margin-top: 0.5rem; 
-    display: block; /* Ensures it behaves as a block element */
+    display: block;
 }
 
 /* Webkit Track (Chrome/Safari/Edge) */
 input[type="range"]::-webkit-slider-runnable-track {
     width: 100%;
-    height: 4px; /* Slightly thinner track looks cleaner */
+    height: 4px;
     background: var(--track-color); 
     border-radius: 5px;
     border: none;
@@ -181,19 +188,19 @@ input[type="range"]::-moz-range-track {
 /* Webkit Thumb */
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    height: 24px; 
-    width: 24px;
+    height: 26px; /* Slightly larger thumb */
+    width: 26px;
     border-radius: 50%;
     background: var(--accent);
-    margin-top: -10px; /* (Track 4px - Thumb 24px) / 2 = -10px */
+    margin-top: -11px; /* (4 - 26) / 2 = -11 */
     box-shadow: 0 0 0 4px var(--bg); 
     border: 1px solid rgba(0,0,0,0.1);
 }
 
 /* Firefox Thumb */
 input[type="range"]::-moz-range-thumb {
-    height: 24px;
-    width: 24px;
+    height: 26px;
+    width: 26px;
     border: none;
     border-radius: 50%;
     background: var(--accent);
@@ -208,11 +215,12 @@ button {
     border: none;
     font-family: var(--font-mono);
     font-weight: 600;
-    font-size: 1rem;
+    /* Increased size */
+    font-size: 1.1rem;
     cursor: pointer;
     border-radius: var(--radius);
     transition: transform 0.1s ease;
-    width: 100%; /* Force full width alignment */
+    width: 100%;
     display: block;
 }
 
@@ -223,11 +231,12 @@ button:active {
 .code-output {
     background: rgba(0,0,0,0.05);
     padding: 2rem;
-    font-size: 0.9rem;
+    /* Increased size */
+    font-size: 1rem;
     border-radius: var(--radius);
     font-family: var(--font-mono);
     overflow-x: auto;
-    width: 100%; /* Force full width alignment */
+    width: 100%;
 }
 
 /* --- Mobile / Tablet Responsive --- */
