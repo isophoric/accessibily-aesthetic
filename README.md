@@ -5,7 +5,7 @@
 ![Project Screenshot](screenshot.png) 
 
 ## Live Demo
-(http://accessiblyaesthetic.xyz/)
+http://accessiblyaesthetic.xyz
 
 ## Features
 
