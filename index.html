@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accessibly Aesthetic</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/culori@3.3.0/build/culori.min.js"></script>
-    
+    <!-- We removed the culori script from here. We will import it inside script.js -->
 </head>
 <body>
     <main class="app-container">
@@ -26,6 +25,7 @@
                 <div class="stat-card">
                     <span class="label">Accent:</span>
                     <span id="hex-accent" class="hex-value">#6366f1</span>
+                    <!-- Contrast badge now has a dynamic ID -->
                     <span id="contrast-badge" class="badge">Pass</span>
                 </div>
             </div>
@@ -37,7 +37,8 @@
                     <label>Hue</label>
                     <span id="val-hue">270</span>
                 </div>
-                <input type="range" id="input-hue" min="0" max="360" value="270">
+                <!-- Added aria-label for accessibility -->
+                <input type="range" id="input-hue" min="0" max="360" value="270" aria-label="Hue">
             </div>
 
             <div class="control-group">
@@ -45,26 +46,23 @@
                     <label>Chroma</label>
                     <span id="val-chroma">0.15</span>
                 </div>
-                <input type="range" id="input-chroma" min="0" max="0.37" step="0.01" value="0.15">
+                <input type="range" id="input-chroma" min="0" max="0.37" step="0.01" value="0.15" aria-label="Chroma">
             </div>
 
             <button id="mode-toggle">Switch to Dark Mode</button>
 
             <div class="code-output">
-                <pre><code id="css-code">
-:root {
-  --color-bg: #...;
-  --color-text: #...;
-  --color-accent: #...;
-}
-                </code></pre>
+                <!-- Added formatting to keep indentation -->
+                <pre><code id="css-code">:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --accent: #6366f1;
+}</code></pre>
             </div>
         </aside>
     </main>
-    <script src="script.js"></script>
-    
+
+    <!-- KEY CHANGE: type="module" allows us to import libraries directly in JS -->
+    <script type="module" src="script.js"></script>
 </body>
-
 </html>
-
-
