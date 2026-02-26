@@ -13,6 +13,8 @@
 
     /* Shape consistency */
     --radius: 12px;
+    --border-width: 3px;
+    --depth: 8px; /* How deep the 3D effect is */
 }
 
 * {
@@ -48,16 +50,17 @@ a:hover {
     width: 100%;
     max-width: 1200px;
     gap: 5rem;
-    align-items: stretch; 
+    align-items: stretch; /* Ensures columns are equal height */
 }
 
-/* --- Left Column --- */
+/* --- Left column --- */
 .preview-area {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content removed in favor of margin-top: auto below */
     gap: 3rem; 
     align-items: flex-start;
+    height: 100%;
 }
 
 .header-content {
@@ -81,7 +84,7 @@ a:hover {
     font-family: var(--font-mono);
 }
 
-/* --- THE CRISPY COLOR CARD --- */
+/* color card */
 .stats-row {
     background: var(--accent);
     padding: 3rem 2.5rem;
@@ -91,20 +94,40 @@ a:hover {
     gap: 2rem;
     color: var(--bg); 
     border-radius: var(--radius);
-    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
     width: 100%; 
     
-    /* 1. Border is Text Color */
-    border: 3px solid var(--text);
+    /* Alignment Fix: Forces card to the bottom of the flex column */
+    margin-top: auto;
     
-    /* 2. Elongated Bottom (Hard Shadow) is Text Color */
-    box-shadow: 0 8px 0 var(--text);
+    /* 3D structure */
+    position: relative;
+    border: var(--border-width) solid var(--text);
+    /* No box-shadow, we use ::after */
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease;
 }
 
-/* Optional: Subtle press effect on the card */
+/* Shadow block */
+.stats-row::after {
+    content: "";
+    position: absolute;
+    top: var(--depth);
+    left: calc(var(--border-width) * -1); /* Align left edge perfectly */
+    width: calc(100% + (var(--border-width) * 2)); /* Full width including borders */
+    height: 100%;
+    background-color: var(--text);
+    border-radius: var(--radius);
+    z-index: -1;
+    border: var(--border-width) solid var(--text);
+    transition: top 0.1s ease;
+}
+
+/* Press effect */
 .stats-row:active {
     transform: translateY(4px);
-    box-shadow: 0 4px 0 var(--text);
+}
+.stats-row:active::after {
+    top: 4px; /* Squish effect */
 }
 
 .stat-card {
@@ -128,11 +151,10 @@ a:hover {
     font-weight: bold; 
 }
 
-/* --- Right Column (Controls) --- */
+/*  Right column controls  */
 .controls {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
     height: 100%; 
     gap: 2rem;
     width: 100%;
@@ -162,7 +184,7 @@ a:hover {
     font-size: 1.1rem;
 }
 
-/* --- Fixed Slider CSS --- */
+/*  slider  */
 input[type="range"] {
     -webkit-appearance: none; 
     width: 100%;
@@ -196,7 +218,7 @@ input[type="range"]::-webkit-slider-thumb {
     background: var(--accent);
     margin-top: -11px;
     box-shadow: 0 0 0 4px var(--bg); 
-    border: 2px solid var(--text); /* Added border to match theme */
+    border: 2px solid var(--text);
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -209,44 +231,63 @@ input[type="range"]::-moz-range-thumb {
     border: 2px solid var(--text);
 }
 
-/* --- THE HOLLOW TO FILLED BUTTON --- */
+/*  Fill button  */
 button {
     padding: 1.5rem; 
     
     /* Default State: Hollow */
     background: transparent;
     color: var(--text);
-    border: 3px solid var(--text);
-    
-    /* 3D Effect for consistency */
-    box-shadow: 0 6px 0 var(--text);
+    border: var(--border-width) solid var(--text);
     
     font-family: var(--font-mono);
     font-weight: 600;
     font-size: 1.1rem;
     cursor: pointer;
     border-radius: var(--radius);
-    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
     width: 100%;
     display: block;
+    
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    
+    /* Ensures button sits properly in flow */
+    margin-bottom: 0.5rem; 
+}
+
+/* Button shadow */
+button::after {
+    content: "";
+    position: absolute;
+    top: 6px; /* Slightly shallower than cards for variety, or use var(--depth) */
+    left: calc(var(--border-width) * -1);
+    width: calc(100% + (var(--border-width) * 2));
+    height: 100%;
+    background-color: var(--text);
+    border-radius: var(--radius);
+    z-index: -1;
+    border: var(--border-width) solid var(--text);
+    transition: top 0.2s ease;
 }
 
 /* Hover State: Filled */
 button:hover {
     background: var(--text);
     color: var(--bg);
-    /* We keep the shadow on hover for a solid look */
 }
 
-/* Click State: Presses down */
+/* Click State */
 button:active {
     transform: translateY(4px);
-    box-shadow: 0 2px 0 var(--text);
+}
+button:active::after {
+    top: 2px;
 }
 
-/* --- THE CRISPY CODE CARD --- */
+/* code card */
 .code-output {
-    background: rgba(0,0,0,0.03); /* Very subtle background */
+    background: rgba(0,0,0,0.03); 
     padding: 2rem;
     font-size: 1rem;
     border-radius: var(--radius);
@@ -254,11 +295,33 @@ button:active {
     overflow-x: auto;
     width: 100%;
     
-    /* 1. Border is Accent Color */
-    border: 3px solid var(--accent);
+    /* Alignment Fix: Forces card to the bottom of the flex column */
+    margin-top: auto; 
     
-    /* 2. Elongated Bottom (Hard Shadow) is Accent Color */
-    box-shadow: 0 8px 0 var(--accent);
+    /* 3D Structure */
+    position: relative;
+    border: var(--border-width) solid var(--accent);
+    transform-style: preserve-3d;
+}
+
+/* Code Card Shadow (Accent Color) */
+.code-output::after {
+    content: "";
+    position: absolute;
+    top: var(--depth);
+    left: calc(var(--border-width) * -1);
+    width: calc(100% + (var(--border-width) * 2));
+    height: 100%;
+    background-color: var(--accent); /* Accent shadow */
+    border-radius: var(--radius);
+    z-index: -1;
+    border: var(--border-width) solid var(--accent);
+}
+
+/* Pre tag reset to prevent internal margins messing up alignment */
+.code-output pre {
+    margin: 0;
+    white-space: pre-wrap;
 }
 
 /* --- Mobile / Tablet Responsive --- */
@@ -273,6 +336,11 @@ button:active {
         align-items: center; 
         text-align: center; 
         gap: 2rem;
+    }
+    
+    /* Reset margin-top for mobile so they don't float weirdly */
+    .stats-row, .code-output {
+        margin-top: 0;
     }
 
     .stats-row {
