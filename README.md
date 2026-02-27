@@ -16,8 +16,8 @@ https://accessiblyaesthetic.xyz
 
 ## Tech Stack
 
--   **HTML5:** 
--   **CSS3:** 
+-   **HTML5** 
+-   **CSS3** 
 -   **JavaScript**
--   **Culori:**
+-   **Culori**
 
