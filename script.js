@@ -8,10 +8,6 @@ const modeBtn = document.getElementById('mode-toggle');
 const cssCodeBlock = document.getElementById('css-code');
 const subtitle = document.getElementById('dynamic-subtitle');
 
-// New Selectors for Copy Functionality
-const codeCard = document.getElementById('code-card');
-const copyText = document.getElementById('copy-text');
-
 let isDark = false;
 
 function updatePalette() {
@@ -37,7 +33,7 @@ function updatePalette() {
     document.documentElement.style.setProperty('--text', textHex);
     document.documentElement.style.setProperty('--accent', accentHex);
     
-    // Update Slider Track Color based on Mode
+    // Update Slider Track Color based on Mode (Visible line fix)
     const trackColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
     document.documentElement.style.setProperty('--track-color', trackColor);
 
@@ -55,12 +51,13 @@ function updatePalette() {
 
     // Contrast Check & Subtitle Update
     const contrast = wcagContrast(accentHex, bgHex);
-    const ratio = contrast.toFixed(2);
+    const ratio = contrast.toFixed(2); // Specific ratio (e.g., 4.32)
     
     let passOrFail = "fails";
     let complianceLevel = "Fails WCAG";
     let wcagLink = "https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html";
 
+    // Logic for WCAG Compliance Levels
     if (contrast >= 7.0) {
         passOrFail = "passes";
         complianceLevel = "WCAG AAA Compliant";
@@ -68,6 +65,7 @@ function updatePalette() {
         passOrFail = "passes";
         complianceLevel = "WCAG AA Compliant";
     } else if (contrast >= 3.0) {
+        // Technically passes for Large Text, but usually considered a partial pass/fail for generic UI
         passOrFail = "partially passes"; 
         complianceLevel = "WCAG AA Large Text Only";
     } else {
@@ -75,28 +73,9 @@ function updatePalette() {
         complianceLevel = "Fails WCAG";
     }
 
-    // Update Subtitle
+    // Insert HTML into subtitle with Link
     subtitle.innerHTML = `Your current palette ${passOrFail} with a ${ratio}:1 contrast ratio. (<a href="${wcagLink}" target="_blank" rel="noopener noreferrer">${complianceLevel}</a>)`;
 }
-
-// COPY LOGIC (Entire Card Click)
-codeCard.addEventListener('click', () => {
-    const codeText = cssCodeBlock.innerText;
-    
-    navigator.clipboard.writeText(codeText).then(() => {
-        // Change instruction text temporarily
-        const originalText = copyText.innerText;
-        copyText.innerText = "Copied!";
-        copyText.style.opacity = "1"; // Make it fully visible when copied
-        
-        setTimeout(() => {
-            copyText.innerText = originalText;
-            copyText.style.opacity = "0.6"; // Return to subtle opacity
-        }, 2000);
-    }).catch(err => {
-        console.error('Failed to copy: ', err);
-    });
-});
 
 hueInput.addEventListener('input', updatePalette);
 chromaInput.addEventListener('input', updatePalette);
