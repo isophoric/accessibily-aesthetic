@@ -7,7 +7,10 @@ const valChroma = document.getElementById('val-chroma');
 const modeBtn = document.getElementById('mode-toggle');
 const cssCodeBlock = document.getElementById('css-code');
 const subtitle = document.getElementById('dynamic-subtitle');
-const copyBtn = document.getElementById('copy-btn');
+
+// New Selectors for Copy Functionality
+const codeCard = document.getElementById('code-card');
+const copyText = document.getElementById('copy-text');
 
 let isDark = false;
 
@@ -76,18 +79,19 @@ function updatePalette() {
     subtitle.innerHTML = `Your current palette ${passOrFail} with a ${ratio}:1 contrast ratio. (<a href="${wcagLink}" target="_blank" rel="noopener noreferrer">${complianceLevel}</a>)`;
 }
 
-// COPY BUTTON LOGIC
-copyBtn.addEventListener('click', () => {
+// COPY LOGIC (Entire Card Click)
+codeCard.addEventListener('click', () => {
     const codeText = cssCodeBlock.innerText;
     
     navigator.clipboard.writeText(codeText).then(() => {
-        // Visual Feedback
-        const originalText = copyBtn.innerText;
-        copyBtn.innerText = "Copied!";
+        // Change instruction text temporarily
+        const originalText = copyText.innerText;
+        copyText.innerText = "Copied!";
+        copyText.style.opacity = "1"; // Make it fully visible when copied
         
-        // Revert back after 2 seconds
         setTimeout(() => {
-            copyBtn.innerText = originalText;
+            copyText.innerText = originalText;
+            copyText.style.opacity = "0.6"; // Return to subtle opacity
         }, 2000);
     }).catch(err => {
         console.error('Failed to copy: ', err);
