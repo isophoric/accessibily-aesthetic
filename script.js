@@ -28,7 +28,7 @@ function updatePalette() {
     const textL = isDark ? 0.98 : 0.10;
     const accentL = isDark ? 0.70 : 0.55;
 
-    // Generate Hex (Contrast = subtle neutral tint)
+    // Generate Hex — Contrast slider adds subtle tint
     const bgHex = formatHex({ mode: 'oklch', l: bgL, c: baseC * 0.5, h: h });
     const textHex = formatHex({ mode: 'oklch', l: textL, c: baseC, h: h });
     const accentHex = formatHex({ mode: 'oklch', l: accentL, c: c, h: h });
@@ -54,7 +54,7 @@ function updatePalette() {
   --accent: ${accentHex};
 }`;
 
-    // Contrast Check & Subtitle Update
+    // Contrast Check & Subtitle
     const contrast = wcagContrast(accentHex, bgHex);
     const ratio = contrast.toFixed(2);
 
