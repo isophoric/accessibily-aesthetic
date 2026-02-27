@@ -246,19 +246,49 @@ button:active {
 
 /* --- THE CRISPY CODE CARD --- */
 .code-output {
-    background: rgba(0,0,0,0.03); /* Very subtle background */
+    position: relative;
+    background: rgba(0,0,0,0.03);
     padding: 2rem;
     font-size: 1rem;
     border-radius: var(--radius);
     font-family: var(--font-mono);
     overflow-x: auto;
     width: 100%;
-    
     /* 1. Border is Accent Color */
     border: 3px solid var(--accent);
-    
     /* 2. Elongated Bottom (Hard Shadow) is Accent Color */
     box-shadow: 0 8px 0 var(--accent);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+    /* Hover lift + press effect (exactly like the stats-row cards) */
+/*    .code-output:hover {*/
+/*        transform: translateY(-3px);*/
+/*        box-shadow: 0 11px 0 var(--accent);*/
+/*    }*/
+
+    .code-output:active {
+        transform: translateY(4px);
+        box-shadow: 0 4px 0 var(--accent);
+    }
+
+.copy-hint {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    font-size: 0.78rem;
+    opacity: 0.28;
+    color: var(--text);
+    font-style: italic;
+    pointer-events: none;
+    user-select: none;
+    transition: opacity 0.2s ease;
+}
+
+.code-output:hover .copy-hint {
+    opacity: 0.6;
 }
 
 /* --- Mobile / Tablet Responsive --- */
