@@ -272,7 +272,7 @@ button:active {
     bottom: 14px;
     right: 18px;
     font-size: 0.78rem;
-    opacity: 0.50;
+    opacity: 0.75;
     color: var(--text);
     font-style: italic;
     pointer-events: none;
@@ -342,6 +342,7 @@ body[data-theme="dark"] .label-row input[type="number"]:focus {
         gap: 3rem;
     }
 }
+
 
 
 
