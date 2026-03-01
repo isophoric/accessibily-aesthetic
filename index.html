@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-    
+   
 <body>
     <header class="site-header">
         <div class="header-inner">
@@ -21,24 +21,20 @@
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
         </svg>
     </a>
-
     <span class="divider">|</span>
-
     <!-- Info Button -->
     <div class="info-container">
         <button id="info-trigger" class="header-text-btn" aria-expanded="false">
             <span class="plus-icon">+</span> What is this?
         </button>
-        
+       
         <div id="info-dialogue" class="info-card" hidden>
             <p>
                 Create beautiful color palettes that are actually readable. We handle the contrast math in real-time so your designs look great and work for everyone.
             </p>
         </div>
     </div>
-
     <span class="divider">|</span>
-
     <!-- GitHub Icon -->
     <a href="https://github.com/isophoric/accessibly-aesthetic" target="_blank" aria-label="Github" class="icon-link">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -46,7 +42,7 @@
         </svg>
     </a>
 </div>
-        
+       
     </header>
     <main class="app-container">
         <!-- left column: title, wcag ratio, and hex codes -->
@@ -58,7 +54,6 @@
                     Loading contrast data...
                 </p>
             </div>
-
             <div class="stats-row">
                 <div class="stat-card">
                     <span class="label">Background:</span>
@@ -74,11 +69,9 @@
                 </div>
             </div>
         </section>
-
         <!-- right column: controls and copy -->
         <aside class="controls">
             <!-- wrapper for top controls -->
-                        <!-- wrapper for top controls -->
             <div class="controls-top">
                 <div class="control-group">
                     <div class="label-row">
@@ -90,22 +83,19 @@
                 <div class="control-group">
                     <div class="label-row">
                         <label>Chroma</label>
-                        <input type="number" id="val-chroma" value="41" min="0" max="100" step="1" aria-label="Chroma value">
-                        <span class="percent">%</span>
+                        <input type="number" id="val-chroma" value="0.2" min="0" max="0.37" step="0.01" aria-label="Chroma value">
                     </div>
-                    <input type="range" id="input-chroma" min="0" max="100" value="41" aria-label="Chroma">
+                    <input type="range" id="input-chroma" min="0" max="0.37" step="0.01" value="0.2" aria-label="Chroma">
                 </div>
                 <div class="control-group">
                     <div class="label-row">
                         <label>Contrast</label>
-                        <input type="number" id="val-base-chroma" value="83" min="0" max="100" step="1" aria-label="Contrast value">
-                        <span class="percent">%</span>
+                        <input type="number" id="val-base-chroma" value="0.06" min="0" max="0.12" step="0.01" aria-label="Contrast value">
                     </div>
-                    <input type="range" id="input-base-chroma" min="0" max="100" value="83" aria-label="Contrast">
+                    <input type="range" id="input-base-chroma" min="0" max="0.12" step="0.01" value="0.06" aria-label="Contrast">
                 </div>
                 <button id="mode-toggle">Switch to Dark Mode</button>
             </div>
-
             <div class="code-output" id="code-card">
                 <pre><code id="css-code">:root {
               --bg: #ffffff;
@@ -116,14 +106,7 @@
             </div>
         </aside>
     </main>
-
     <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
+ 
