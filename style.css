@@ -1,17 +1,17 @@
 :root {
-    /* Colors */
+    /* colors */
     --bg: #ffffff;
     --text: #1a1a1a;
     --accent: #6366f1;
     
-    /* Dynamic track color for sliders */
+    /* dynamic track color for sliders */
     --track-color: rgba(0, 0, 0, 0.2);
 
-    /* Fonts */
+    /* fonts */
     --font-title: 'Lexend', sans-serif;
     --font-mono: 'SF Mono', 'Segoe UI Mono', 'Consolas', 'Menlo', monospace;
 
-    /* Shape consistency */
+    /* card radius */
     --radius: 12px;
 }
 
@@ -51,7 +51,7 @@ a:hover {
     align-items: stretch; 
 }
 
-/* --- Left Column --- */
+/* --- left column --- */
 .preview-area {
     display: flex;
     flex-direction: column;
@@ -81,7 +81,7 @@ a:hover {
     font-family: var(--font-mono);
 }
 
-/* --- THE CRISPY COLOR CARD --- */
+/* --- hex color card --- */
 .stats-row {
     background: var(--accent);
     padding: 3rem 2.5rem;
@@ -94,14 +94,14 @@ a:hover {
     transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.1s ease;
     width: 100%; 
     
-    /* 1. Border is Text Color */
+    /* border is text color */
     border: 3px solid var(--text);
     
-    /* 2. Elongated Bottom (Hard Shadow) is Text Color */
+    /* elongated bottom is text color */
     box-shadow: 0 8px 0 var(--text);
 }
 
-/* Optional: Subtle press effect on the card */
+/* press effect on the card */
 .stats-row:active {
     transform: translateY(4px);
     box-shadow: 0 4px 0 var(--text);
@@ -128,7 +128,7 @@ a:hover {
     font-weight: bold; 
 }
 
-/* --- Right Column (Controls) --- */
+/* --- right column controls and code --- */
 .controls {
     display: flex;
     flex-direction: column;
@@ -162,7 +162,7 @@ a:hover {
     font-size: 1.1rem;
 }
 
-/* --- Fixed Slider CSS --- */
+/* --- fixed slider --- */
 input[type="range"] {
     -webkit-appearance: none; 
     width: 100%;
@@ -196,7 +196,7 @@ input[type="range"]::-webkit-slider-thumb {
     background: var(--accent);
     margin-top: -11px;
     box-shadow: 0 0 0 4px var(--bg); 
-    border: 2px solid var(--text); /* Added border to match theme */
+    border: 3px solid var(--text);
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -206,19 +206,19 @@ input[type="range"]::-moz-range-thumb {
     border-radius: 50%;
     background: var(--accent);
     box-shadow: 0 0 0 4px var(--bg);
-    border: 2px solid var(--text);
+    border: 3px solid var(--text);
 }
 
-/* --- THE HOLLOW TO FILLED BUTTON --- */
+/* --- fill button (dark theme) --- */
 button {
     padding: 1.5rem; 
     
-    /* Default State: Hollow */
+    /* default State (hollow) */
     background: transparent;
     color: var(--text);
     border: 3px solid var(--text);
     
-    /* 3D Effect for consistency */
+    /* 3D effect */
     box-shadow: 0 6px 0 var(--text);
     
     font-family: var(--font-mono);
@@ -231,20 +231,19 @@ button {
     display: block;
 }
 
-/* Hover State: Filled */
+/* hover state (filled) */
 button:hover {
     background: var(--text);
     color: var(--bg);
-    /* We keep the shadow on hover for a solid look */
 }
 
-/* Click State: Presses down */
+/* click state (presses down) */
 button:active {
     transform: translateY(4px);
     box-shadow: 0 2px 0 var(--text);
 }
 
-/* --- THE CRISPY CODE CARD --- */
+/* --- code card --- */
 .code-output {
     position: relative;
     background: rgba(0,0,0,0.03);
@@ -263,12 +262,6 @@ button:active {
     transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-    /* Hover lift + press effect (exactly like the stats-row cards) */
-/*    .code-output:hover {*/
-/*        transform: translateY(-3px);*/
-/*        box-shadow: 0 11px 0 var(--accent);*/
-/*    }*/
-
     .code-output:active {
         transform: translateY(4px);
         box-shadow: 0 4px 0 var(--accent);
@@ -279,7 +272,7 @@ button:active {
     bottom: 14px;
     right: 18px;
     font-size: 0.78rem;
-    opacity: 0.28;
+    opacity: 0.50;
     color: var(--text);
     font-style: italic;
     pointer-events: none;
@@ -291,7 +284,7 @@ button:active {
     opacity: 0.6;
 }
 
-/* Editable number inputs (clean & accessible) */
+/* editable number inputs (clean & accessible) */
 .label-row input[type="number"] {
     width: 65px;
     text-align: right;
@@ -323,7 +316,7 @@ body[data-theme="dark"] .label-row input[type="number"]:focus {
     background: rgba(0,0,0,0.3);
 }
 
-/* --- Mobile / Tablet Responsive --- */
+/* --- mobile responsive --- */
 @media (max-width: 900px) {
     .app-container {
         grid-template-columns: 1fr;
@@ -349,5 +342,6 @@ body[data-theme="dark"] .label-row input[type="number"]:focus {
         gap: 3rem;
     }
 }
+
 
 
