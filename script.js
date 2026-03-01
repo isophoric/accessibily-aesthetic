@@ -20,17 +20,17 @@ const infoDialog = document.getElementById('info-dialogue');
 
 let isDark = false;
 
-// Helpers: % → internal OKLCH values (max 0.37)
-function percentToInternal(p) { return (p / 100) * 0.37; }
-function contrastPercentToBaseC(p) { return (100 - p) / 100 * 0.37; } // flipped!
+// Helpers (exact same max values as your original version)
+function percentToChroma(p) { return (p / 100) * 0.37; }           // Accent max = 0.37
+function contrastPercentToBaseC(p) { return (100 - p) / 100 * 0.12; } // Neutrals max = 0.12, flipped!
 
 function updatePalette() {
     const h = parseFloat(hueInput.value);
     const chromaPercent = parseFloat(chromaInput.value);
     const contrastPercent = parseFloat(baseChromaInput.value);
 
-    const c = percentToInternal(chromaPercent);           // Accent
-    const baseC = contrastPercentToBaseC(contrastPercent); // Neutrals (flipped)
+    const c = percentToChroma(chromaPercent);                    // Accent
+    const baseC = contrastPercentToBaseC(contrastPercent);       // Neutrals (flipped)
 
     // Update displayed percentages
     valHue.value = Math.round(h);
@@ -42,7 +42,7 @@ function updatePalette() {
     const textL = isDark ? 0.98 : 0.10;
     const accentL = isDark ? 0.70 : 0.55;
 
-    // Generate Hex
+    // Generate Hex — EXACT same as your original version
     const bgHex = formatHex({ mode: 'oklch', l: bgL, c: baseC * 0.5, h: h });
     const textHex = formatHex({ mode: 'oklch', l: textL, c: baseC, h: h });
     const accentHex = formatHex({ mode: 'oklch', l: accentL, c: c, h: h });
@@ -133,7 +133,7 @@ codeCard.addEventListener('click', async () => {
     }
 });
 
-// Header Info Toggle (your existing code)
+// Header Info Toggle (unchanged)
 if (infoTrigger && infoDialog) {
     infoTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
