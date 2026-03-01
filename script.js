@@ -20,17 +20,22 @@ const infoDialog = document.getElementById('info-dialogue');
 
 let isDark = false;
 
-// --- Main Logic ---
+// Helpers: % → internal OKLCH values (max 0.37)
+function percentToInternal(p) { return (p / 100) * 0.37; }
+function contrastPercentToBaseC(p) { return (100 - p) / 100 * 0.37; } // flipped!
 
 function updatePalette() {
     const h = parseFloat(hueInput.value);
-    const c = parseFloat(chromaInput.value);
-    const baseC = parseFloat(baseChromaInput.value);
+    const chromaPercent = parseFloat(chromaInput.value);
+    const contrastPercent = parseFloat(baseChromaInput.value);
 
-    // Update number inputs
-    valHue.value = h;
-    valChroma.value = c;
-    valBaseChroma.value = baseC.toFixed(2);
+    const c = percentToInternal(chromaPercent);           // Accent
+    const baseC = contrastPercentToBaseC(contrastPercent); // Neutrals (flipped)
+
+    // Update displayed percentages
+    valHue.value = Math.round(h);
+    valChroma.value = Math.round(chromaPercent);
+    valBaseChroma.value = Math.round(contrastPercent);
 
     // Define Lightness
     const bgL = isDark ? 0.15 : 0.98;
@@ -47,37 +52,33 @@ function updatePalette() {
     document.documentElement.style.setProperty('--text', textHex);
     document.documentElement.style.setProperty('--accent', accentHex);
    
-    // Update Slider Track Color
     const trackColor = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
     document.documentElement.style.setProperty('--track-color', trackColor);
 
-    // Update displayed hex values
     document.getElementById('hex-bg').innerText = bgHex;
     document.getElementById('hex-text').innerText = textHex;
     document.getElementById('hex-accent').innerText = accentHex;
 
-    // Update Code Block
     cssCodeBlock.innerText = `:root {
   --bg: ${bgHex};
   --text: ${textHex};
   --accent: ${accentHex};
 }`;
 
-    // Contrast Check & Subtitle
-    const contrast = wcagContrast(accentHex, bgHex);
-    const ratio = contrast.toFixed(2);
+    const contrastRatio = wcagContrast(accentHex, bgHex);
+    const ratio = contrastRatio.toFixed(2);
 
     let passOrFail = "fails";
     let complianceLevel = "Fails WCAG";
     let wcagLink = "https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html";
 
-    if (contrast >= 7.0) {
+    if (contrastRatio >= 7.0) {
         passOrFail = "passes";
         complianceLevel = "WCAG AAA Compliant";
-    } else if (contrast >= 4.5) {
+    } else if (contrastRatio >= 4.5) {
         passOrFail = "passes";
         complianceLevel = "WCAG AA Compliant";
-    } else if (contrast >= 3.0) {
+    } else if (contrastRatio >= 3.0) {
         passOrFail = "partially passes";
         complianceLevel = "WCAG AA Large Text Only";
     } else {
@@ -87,7 +88,6 @@ function updatePalette() {
 
     subtitle.innerHTML = `Your current palette ${passOrFail} with a ${ratio}:1 contrast ratio. (<a href="${wcagLink}" target="_blank" rel="noopener noreferrer">${complianceLevel}</a>)`;
 
-    // Update Code Card Background (Moved inside to avoid wrapper issues)
     updateCodeCardBackground();
 }
 
@@ -99,8 +99,7 @@ function updateCodeCardBackground() {
     }
 }
 
-// --- Event Listeners: Main App ---
-
+// Event Listeners
 hueInput.addEventListener('input', updatePalette);
 chromaInput.addEventListener('input', updatePalette);
 baseChromaInput.addEventListener('input', updatePalette);
@@ -134,52 +133,34 @@ codeCard.addEventListener('click', async () => {
     }
 });
 
-// --- Event Listeners: Header Info Toggle ---
-
+// Header Info Toggle (your existing code)
 if (infoTrigger && infoDialog) {
     infoTrigger.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent document click from immediately closing it
-        
+        e.stopPropagation();
         const isExpanded = infoTrigger.getAttribute('aria-expanded') === 'true';
-        
-        if (isExpanded) {
-            closeInfo();
-        } else {
-            openInfo();
-        }
+        if (isExpanded) closeInfo(); else openInfo();
     });
 
-    // Close dialogue when clicking anywhere outside
     document.addEventListener('click', (e) => {
         if (infoDialog.classList.contains('visible') && !infoDialog.contains(e.target) && e.target !== infoTrigger) {
             closeInfo();
         }
     });
-} else {
-    console.error("Header elements not found! Check HTML IDs.");
 }
 
 function openInfo() {
     infoTrigger.setAttribute('aria-expanded', 'true');
-    infoTrigger.classList.add('active'); // Rotates the +
+    infoTrigger.classList.add('active');
     infoDialog.hidden = false;
-    
-    // Small timeout to allow display change to register before opacity transition
-    setTimeout(() => {
-        infoDialog.classList.add('visible');
-    }, 10);
+    setTimeout(() => infoDialog.classList.add('visible'), 10);
 }
 
 function closeInfo() {
     infoTrigger.setAttribute('aria-expanded', 'false');
-    infoTrigger.classList.remove('active'); // Rotates back
+    infoTrigger.classList.remove('active');
     infoDialog.classList.remove('visible');
-    
-    // Wait for transition to finish before hiding element
-    setTimeout(() => {
-        infoDialog.hidden = true;
-    }, 200);
+    setTimeout(() => infoDialog.hidden = true, 200);
 }
 
-// --- Init ---
+// Init
 updatePalette();
