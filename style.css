@@ -366,7 +366,7 @@ body[data-theme="dark"] .label-row input[type="number"]:focus {
     justify-content: center;
     z-index: 1000;
     margin-bottom: 0;
-    opacity: 0.75
+    opacity: 1
 }
 
 .header-inner {
@@ -483,5 +483,6 @@ button.header-text-btn {
             transform: translateY(0);
         }
 }
+
 
 
