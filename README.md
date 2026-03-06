@@ -1,6 +1,6 @@
 # Accessibly Aesthetic
 
-**Accessibly Aesthetic** is a web-based color palette generator designed to bridge the gap between visual appeal and accessibility standards.
+A web-based color palette generator designed to bridge the gap between visual appeal and accessibility standards.
 
 ![Project Screenshot](demo.gif)
 
